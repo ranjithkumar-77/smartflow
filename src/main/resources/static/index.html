@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SmartFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">S</div>
+          <div>
+            <div class="brand-name">SmartFlow</div>
+            <div class="brand-sub">Service networking</div>
+          </div>
+        </div>
+        <nav class="topnav">
+          <button class="nav-btn active" data-view="dashboard">Dashboard</button>
+          <button class="nav-btn" data-view="requests">Requests</button>
+          <button class="nav-btn" data-view="offers">Offers</button>
+        </nav>
+        <div class="header-actions">
+          <span id="userChip" class="user-chip hidden">Guest</span>
+          <button id="logoutBtn" class="ghost-btn hidden">Logout</button>
+        </div>
+      </header>
+
+      <main class="main-grid">
+        <section id="authSection" class="panel auth-panel">
+          <div class="auth-card">
+            <div class="eyebrow">Welcome</div>
+            <h1>Service requests. Faster.</h1>
+            <p class="hero-copy">Connect customers to trusted technicians in real time.</p>
+
+            <div class="feature-row">
+              <span class="feature-chip">Live matching</span>
+              <span class="feature-chip">Verified specialists</span>
+              <span class="feature-chip">Fast resolution</span>
+            </div>
+
+            <div class="tab-row">
+              <button class="tab-btn active" data-auth="login">Login</button>
+              <button class="tab-btn" data-auth="register">Register</button>
+            </div>
+
+            <form id="loginForm" class="auth-form active-form">
+              <label>
+                <span>Email</span>
+                <input id="loginEmail" type="email" placeholder="you@example.com" required />
+              </label>
+              <label>
+                <span>Password</span>
+                <input id="loginPassword" type="password" placeholder="••••••••" required />
+              </label>
+              <button type="submit" class="primary-btn">Login</button>
+            </form>
+
+            <form id="registerForm" class="auth-form">
+              <label>
+                <span>Name</span>
+                <input id="registerName" type="text" placeholder="Your full name" required />
+              </label>
+              <label>
+                <span>Email</span>
+                <input id="registerEmail" type="email" placeholder="you@example.com" required />
+              </label>
+              <label>
+                <span>Phone</span>
+                <input id="registerPhone" type="tel" placeholder="+91 98765 43210" required />
+              </label>
+              <label>
+                <span>Role</span>
+                <select id="registerRole">
+                  <option value="CUSTOMER">Customer</option>
+                  <option value="TECHNICIAN">Technician</option>
+                </select>
+              </label>
+              <label id="technicianSkillField" class="hidden">
+                <span>Technician type</span>
+                <select id="registerTechnicianSkill">
+                  <option value="">Select type</option>
+                </select>
+              </label>
+              <div id="technicianLocationFields" class="hidden">
+                <label>
+                  <span>Location</span>
+                  <input id="registerTechnicianLocation" type="text" placeholder="Bengaluru, Karnataka, India" />
+                </label>
+                <div class="location-actions">
+                  <button type="button" id="registerUseCurrentLocationBtn" class="ghost-btn location-btn">Use my current location</button>
+                  <span id="registerLocationStatus" class="location-status">Location will auto-fill here.</span>
+                </div>
+                <input id="registerTechnicianLatitude" type="hidden" />
+                <input id="registerTechnicianLongitude" type="hidden" />
+              </div>
+              <label>
+                <span>Password</span>
+                <input id="registerPassword" type="password" placeholder="Create a password" required />
+              </label>
+              <button type="submit" class="primary-btn">Create Account</button>
+            </form>
+
+          </div>
+        </section>
+
+        <section id="appSection" class="panel app-panel hidden">
+          <div class="dashboard-head">
+            <div>
+              <div class="eyebrow">Overview</div>
+              <h2 id="welcomeTitle">Dashboard</h2>
+            </div>
+            <button id="newRequestBtn" class="primary-btn small hidden">New request</button>
+          </div>
+
+          <div id="dashboardView" class="view active-view">
+            <div class="stats-grid">
+              <div class="stat-card accent">
+                <span>Total requests</span>
+                <strong id="statRequests">0</strong>
+              </div>
+              <div class="stat-card">
+                <span>Open offers</span>
+                <strong id="statOffers">0</strong>
+              </div>
+              <div class="stat-card">
+                <span>Active requests</span>
+                <strong id="statActive">0</strong>
+              </div>
+              <div class="stat-card">
+                <span>Completed requests</span>
+                <strong id="statCompleted">0</strong>
+              </div>
+              <div class="stat-card">
+                <span>Rating</span>
+                <strong id="statRating">0.0</strong>
+              </div>
+            </div>
+
+            <div class="section-card">
+              <div class="section-header">
+                <h3>Recent requests</h3>
+              </div>
+              <div id="requestList" class="stack-list"></div>
+            </div>
+          </div>
+
+          <div id="requestsView" class="view">
+            <div class="section-card">
+              <div class="section-header">
+                <h3>Request form</h3>
+              </div>
+              <form id="requestForm" class="stack-form">
+                <div class="field-grid two-col">
+                  <label>
+                    <span>Title</span>
+                    <input id="requestTitle" type="text" placeholder="AC water leakage" required />
+                  </label>
+                  <label>
+                    <span>Technician type</span>
+                    <select id="requestCategory">
+                      <option value="ANY">Any technician</option>
+                    </select>
+                  </label>
+                </div>
+                <label>
+                  <span>Description</span>
+                  <textarea id="requestDescription" rows="4" placeholder="Describe the issue" required></textarea>
+                </label>
+                <div class="field-grid two-col">
+                  <label>
+                    <span>Location</span>
+                    <input id="requestLocation" type="text" placeholder="Bangalore" required />
+                  </label>
+                  <label>
+                    <span>Priority</span>
+                    <select id="requestPriority">
+                      <option value="HIGH">High</option>
+                      <option value="MEDIUM">Medium</option>
+                      <option value="LOW">Low</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="location-actions">
+                  <button type="button" id="useCurrentLocationBtn" class="ghost-btn location-btn">Use my current location</button>
+                  <span id="locationStatus" class="location-status">Detecting your location…</span>
+                </div>
+
+                <input id="requestLatitude" type="hidden" />
+                <input id="requestLongitude" type="hidden" />
+                <button type="submit" class="primary-btn">Create request</button>
+              </form>
+            </div>
+          </div>
+
+          <div id="offersView" class="view">
+            <div class="section-card">
+              <div class="section-header">
+                <h3>Offers</h3>
+              </div>
+              <div id="offersList" class="stack-list"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="/app.js?v=15"></script>
+  </body>
+</html>
