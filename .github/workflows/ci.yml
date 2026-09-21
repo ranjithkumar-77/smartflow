@@ -11,6 +11,9 @@ permissions:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      # CI-only signing key; production deployments must provide their own secret.
+      SMARTFLOW_JWT_SECRET: smartflow-ci-only-signing-key-change-for-production-123456
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
